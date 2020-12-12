@@ -2,24 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
-import { gql, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { GOOGLE_API_KEY } from '@env';
 import { Button, Header, CustomInput } from '../../../../components';
 import { Colors } from '../../../../constants';
 import Logo from '../../components/Logo';
 import styles from './styles';
+import { POC_QUERY } from '../../queries';
 
 interface HomeProps {
   navigation: any;
 }
-
-const POC_QUERY = gql`
-  query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
-    pocSearch(now: $now, algorithm: $algorithm, lat: $lat, long: $long) {
-      id
-    }
-  }
-`;
 
 const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
   const [typedAdress, setTypedAdress] = useState('');
