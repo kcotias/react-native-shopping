@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
   textStyle,
   isLoading,
 }: ButtonProps) => (
-  <Pressable onPress={onPress}>
+  <Pressable onPress={onPress} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
     <View style={style || { ...styles.container, paddingHorizontal: !iconName ? 20 : 0 }}>
       {iconName && <Ionicons name={iconName} size={28} color={iconColor || 'white'} />}
       {title && !isLoading && (
@@ -35,4 +35,4 @@ const Button: React.FC<ButtonProps> = ({
   </Pressable>
 );
 
-export default Button;
+export default React.memo(Button);
