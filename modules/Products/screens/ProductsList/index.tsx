@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { gql, useQuery } from '@apollo/client';
-import { Button, Header, CustomInput } from '../../../../components';
+import { Header, CustomInput } from '../../../../components';
 import styles from './styles';
-import { Layout } from '../../../../constants';
-import { CategoriesList } from '../../components';
+import { CategoriesList, CardItem } from '../../components';
 
 interface ProductListProps {
   navigation: any;
+  route: any;
 }
 
 const CATEGORY_QUERY = gql`
@@ -62,8 +62,6 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
     },
   });
 
-  console.log(productsData);
-
   function handleBackPress() {
     navigation.goBack();
   }
@@ -82,50 +80,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
   }
 
   function renderItem({ item }: any) {
-    return (
-      <View
-        style={{
-          backgroundColor: '#fff',
-          height: 120,
-          marginBottom: 20,
-          marginHorizontal: Layout.spacing.paddingX,
-          borderRadius: 20,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-          flexDirection: 'row',
-          padding: 15,
-        }}>
-        <View style={{ width: '65%' }}>
-          <Text
-            ellipsizeMode="tail"
-            numberOfLines={3}
-            style={{ color: '#152130', fontSize: 16, marginBottom: 8, fontWeight: '600' }}>
-            {item.title}
-          </Text>
-          <Text style={{ color: 'green', fontWeight: '600', fontSize: 18 }}>
-            R$ {item.productVariants[0].price}
-          </Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'flex-end',
-          }}>
-          <Image
-            resizeMode="contain"
-            source={{ uri: item.images[0].url }}
-            style={{ height: 100, width: 100 }}
-          />
-        </View>
-      </View>
-    );
+    return <CardItem item={item} />;
   }
 
   return (
@@ -133,7 +88,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
       <Header hasBackButton onBackPress={handleBackPress} />
       <View>
         <CustomInput
-          placeholder="Search for your favorite drink :)"
+          placeholder="Pesquise por sua bebida favorita!"
           onChangeText={handleChangeText}
         />
         <CategoriesList

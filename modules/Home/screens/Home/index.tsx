@@ -29,7 +29,9 @@ const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
   }, []);
 
   const algorithm = 'NEAREST';
-  const [getPoc, { loading, data }] = useLazyQuery(POC_QUERY);
+  const [getPoc, { loading, data }] = useLazyQuery(POC_QUERY, {
+    onCompleted: (): any => navigation.navigate('ProductsList', { pocId: data.pocSearch[0].id }),
+  });
 
   // Avoided using inline arrow functions or binding on jsx to improve performance
   // Whenever a function is created, the previous function is garbage collected.
@@ -54,7 +56,6 @@ const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
           long: JSON.stringify(location.longitude),
         },
       });
-      navigation.navigate('ProductsList', { pocId: data.pocSearch[0].id });
     } else {
       Alert.alert(
         'Oops',

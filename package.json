@@ -1,6 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "start donus": "yarn && expo start --ios",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
