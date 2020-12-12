@@ -3,17 +3,15 @@ import { TextInput } from 'react-native';
 import styles from './styles';
 
 interface CustomInputProps {
-  onChangeText: (text: string) => void;
+  onChangeText: () => void;
   placeholder: string;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({
-  onChangeText,
-  placeholder,
-}: CustomInputProps) => (
+const CustomInput: React.FC<CustomInputProps> = (props: CustomInputProps) => (
   <TextInput
-    onChangeText={onChangeText}
-    placeholder={placeholder}
+    {...props}
+    onChangeText={props.onChangeText}
+    placeholder={props.placeholder}
     style={styles.textInput}
     placeholderTextColor="gray"
   />

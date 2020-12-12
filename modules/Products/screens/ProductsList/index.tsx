@@ -58,7 +58,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
     variables: {
       id: pocId,
       categoryId: activeCategory,
-      search: '',
+      search,
     },
   });
 
@@ -68,6 +68,10 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
 
   function handleChangeText(text: string) {
     setSearch(text);
+  }
+
+  function handleEndEditing() {
+    refetch();
   }
 
   function onCategoryPress(id) {
@@ -90,6 +94,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
         <CustomInput
           placeholder="Pesquise por sua bebida favorita!"
           onChangeText={handleChangeText}
+          onEndEditing={handleEndEditing}
         />
         <CategoriesList
           categories={categoriesData?.allCategory}
