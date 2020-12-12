@@ -4,7 +4,6 @@ module.exports = {
     jest: true,
   },
   extends: [
-    'plugin:react/recommended',
     'airbnb',
     'plugin:react-native/all',
     'prettier',
@@ -46,6 +45,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'no-use-before-define': 'off',
+    'react/require-default-props': 'off',
   },
   settings: {
     'import/resolver': {

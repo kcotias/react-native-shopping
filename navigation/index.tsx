@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
 import { Home } from '../modules/Home/screens';
-import { Product, ProductsList } from '../modules/Products/screens';
+import { ProductsList } from '../modules/Products/screens';
 import { RootStackParamList } from '../types';
 
 export default function Navigation() {
@@ -21,7 +21,6 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="ProductsList" component={ProductsList} />
-      <Stack.Screen name="Product" component={Product} />
     </Stack.Navigator>
   );
 }

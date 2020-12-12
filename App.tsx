@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { persistCache } from 'apollo3-cache-persist';
 import AppLoading from 'expo-app-loading';
+import { API_URL } from '@env';
 import Navigation from './navigation';
 import { Colors } from './constants';
 
@@ -20,7 +21,7 @@ export default function App() {
   }, []);
 
   const client = new ApolloClient({
-    uri: 'https://api.code-challenge.ze.delivery/public/graphql',
+    uri: API_URL,
     cache,
     defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
   });

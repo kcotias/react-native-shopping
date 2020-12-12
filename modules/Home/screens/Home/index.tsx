@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { TextInput, View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { gql, useLazyQuery } from '@apollo/client';
-import { Button, Header } from '../../../../components';
-import { Colors, Layout } from '../../../../constants';
+import { GOOGLE_API_KEY } from '@env';
+import { Button, Header, CustomInput } from '../../../../components';
+import { Colors } from '../../../../constants';
 import Logo from '../../components/Logo';
+import styles from './styles';
 
-interface HomeProps {}
+interface HomeProps {
+  navigation: any;
+}
 
 const POC_QUERY = gql`
   query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
@@ -17,104 +21,73 @@ const POC_QUERY = gql`
   }
 `;
 
-const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const [location, setLocation] = useState([]);
+const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
   const [typedAdress, setTypedAdress] = useState('');
 
-  const now = new Date().toLocaleDateString();
-  const algorithm = 'NEAREST';
+  useEffect(() => {
+    Location.setGoogleApiKey(GOOGLE_API_KEY.toString());
+  }, []);
 
-  const [getPoc, { loading, data }] = useLazyQuery(POC_QUERY, {
-    variables: location.length > 0 && {
-      now: '2017-08-01T20:00:00.000Z',
-      algorithm,
-      lat: JSON.stringify(location[0].latitude),
-      long: JSON.stringify(location[0].longitude),
-    },
-  });
+  const algorithm = 'NEAREST';
+  const [getPoc, { loading, data }] = useLazyQuery(POC_QUERY);
+
+  // Avoided using inline arrow functions or binding on jsx to improve performance
+  // Whenever a function is created, the previous function is garbage collected.
+  // Rerendering many elements might create jank in animations.
+  // Using an inline arrow function will cause PureComponents, and memo
+  // to rerender anyway.
+  async function onConfirm() {
+    const now = new Date().toISOString();
+    let location;
+    try {
+      const response = await Location.geocodeAsync(typedAdress, { useGoogleMaps: true });
+      location = response[0];
+    } catch (e) {
+      console.log(e);
+      Alert.alert('Oops', 'Something went wrong, make you sure the adress is correct');
+    }
+    getPoc({
+      variables: location && {
+        now,
+        algorithm,
+        lat: JSON.stringify(location.latitude),
+        long: JSON.stringify(location.longitude),
+      },
+    });
+    // navigation.navigate('ProductsList', {id: data.pocSearch.})
+  }
+
+  function handleChangeText(text: string) {
+    setTypedAdress(text);
+  }
 
   return (
-    <LinearGradient style={{ flex: 1 }} colors={['#fe6277', '#ffbf6f']}>
+    <LinearGradient style={styles.gradient} colors={['#fe6277', '#ffbf6f']}>
       <Header />
-      <View style={{ height: Layout.window.height / 3.5 }}>
+      <View style={styles.logoContainer}>
         <Logo />
       </View>
-      <View
-        style={{
-          paddingHorizontal: Layout.spacing.paddingX,
-          alignItems: 'center',
-          marginTop: 20,
-          marginBottom: 30,
-        }}>
-        <Text
-          style={{
-            fontWeight: '800',
-            color: 'white',
-            fontSize: 20,
-            textAlign: 'center',
-          }}>
-          Welcome to
-        </Text>
-        <Text
-          style={{
-            fontWeight: '800',
-            color: 'white',
-            fontSize: 28,
-            textAlign: 'center',
-          }}>
+      <View style={styles.textWrapper}>
+        <Text style={styles.welcomeText}>Welcome to</Text>
+        <Text style={styles.appTitle}>
           TASTY<Text style={{ color: Colors.pallete.tertiary }}>DRINKS</Text>
         </Text>
       </View>
-      <TextInput
-        onChangeText={(text) => setTypedAdress(text)}
+      <CustomInput
+        onChangeText={handleChangeText}
         placeholder="Where do you wish to receive your deliver?"
-        style={{
-          backgroundColor: 'white',
-          height: 60,
-          margin: Layout.spacing.paddingX,
-          borderRadius: 50,
-          paddingLeft: 20,
-          fontSize: 16,
-          marginBottom: 20,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        }}
       />
       <Button
-        onPress={async () => {
-          Location.setGoogleApiKey('AIzaSyA4Vt_tRWA6f3WHfhxjyLtEZ80A4SaKTBs');
-          const response = await Location.geocodeAsync(typedAdress, { useGoogleMaps: true });
-          setLocation(response);
-          getPoc();
-          // navigation.navigate('ProductsList', {id: data.pocSearch.})
-        }}
+        onPress={onConfirm}
         title="Confirm"
-        style={{
-          backgroundColor: Colors.pallete.primaryDark,
-          marginHorizontal: Layout.spacing.paddingX + 40,
-          borderRadius: 50,
-          height: 60,
-          justifyContent: 'center',
-          alignItems: 'center',
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        }}
-        textStyle={{ fontSize: 20, fontWeight: '700', color: 'white' }}
+        style={styles.confirmButton}
+        textStyle={styles.buttonText}
+        isLoading={loading}
       />
     </LinearGradient>
   );
 };
 
-export default Home;
+// Since the component will always be created with the same props, memoizing it is
+// the best to avoid unecessary rerender.
+export default React.memo(Home);
