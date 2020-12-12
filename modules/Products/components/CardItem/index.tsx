@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Button } from '../../../../components';
 import { Colors } from '../../../../constants';
+import { Product } from '../../../../types';
 import styles from './styles';
 
-const CardItem = ({ item }) => {
+interface CardItemProps {
+  item: Product;
+}
+
+const CardItem: React.FC<CardItemProps> = ({ item }: CardItemProps) => {
   const [counter, setCounter] = useState(0);
 
-  function onCounterPress(operation) {
+  function onCounterPress(operation: string) {
     if (operation === 'increase') {
       setCounter(counter + 1);
     } else {

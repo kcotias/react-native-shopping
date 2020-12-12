@@ -3,7 +3,7 @@ import { TextInput } from 'react-native';
 import styles from './styles';
 
 interface CustomInputProps {
-  onChangeText: () => void;
+  onChangeText: (text: string) => void;
   placeholder: string;
 }
 

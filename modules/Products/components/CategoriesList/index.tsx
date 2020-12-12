@@ -4,10 +4,14 @@ import SkeletonContent from 'react-native-skeleton-content';
 import { Colors } from '../../../../constants';
 import styles from './styles';
 
+type Category = {
+  id: number;
+  title: string;
+};
 interface CategoriesListProps {
-  activeButton: any;
-  onButtonPress: () => void;
-  categories: any;
+  activeButton: number;
+  onButtonPress: (id: number) => void;
+  categories: Category[];
   isLoading: boolean;
 }
 
@@ -20,7 +24,7 @@ const CategoriesList: React.FC<CategoriesListProps> = ({
   return (
     <ScrollView style={styles.container} horizontal showsHorizontalScrollIndicator={false}>
       {!isLoading &&
-        categories?.map((item: Object, index: number) => {
+        categories?.map((item: Category, index: number) => {
           const isActive = item.id === activeButton;
 
           return (

@@ -11,5 +11,4 @@ export default {
   spacing: {
     paddingX: 16,
   },
-  isSmallDevice: width < 375,
 };

@@ -4,14 +4,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { useLazyQuery } from '@apollo/client';
 import { GOOGLE_API_KEY } from '@env';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Header, CustomInput } from '../../../../components';
 import { Colors } from '../../../../constants';
 import Logo from '../../components/Logo';
 import styles from './styles';
 import { POC_QUERY } from '../../queries';
+import { RootStackParamList } from '../../../../types';
 
 interface HomeProps {
-  navigation: any;
+  navigation: StackNavigationProp<RootStackParamList>;
 }
 
 const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
@@ -39,7 +41,7 @@ const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
         const response = await Location.geocodeAsync(typedAdress, { useGoogleMaps: true });
         location = response[0];
       } catch (e) {
-        Alert.alert('Oops', 'Something went wrong, make you sure the adress is correct');
+        Alert.alert('Oops', 'Algo deu errado, verifique o endereço digitado.');
       }
       getPoc({
         variables: location && {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Pressable, Text, View, ActivityIndicator } from 'react-native';
+import { Pressable, Text, View, ActivityIndicator, TextStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
 
@@ -10,7 +10,7 @@ interface ButtonProps {
   iconColor?: string;
   onPress: () => void;
   style?: any;
-  textStyle?: any;
+  textStyle?: TextStyle;
   isLoading?: boolean;
 }
 

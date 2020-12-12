@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useQuery } from '@apollo/client';
 import SkeletonContent from 'react-native-skeleton-content';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 import { Header, CustomInput } from '../../../../components';
 import styles from './styles';
 import { CategoriesList, CardItem } from '../../components';
 import { Layout } from '../../../../constants';
 import { CATEGORY_QUERY, PRODUCTS_QUERY } from '../../queries';
+import { RootStackParamList } from '../../../../types';
 
 interface ProductListProps {
-  navigation: any;
-  route: any;
+  navigation: StackNavigationProp<RootStackParamList>;
+  route: RouteProp<{ params: { pocId: number } }, 'params'>;
 }
 
 const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
   const { pocId } = route.params;
   const [search, setSearch] = useState('');
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
 
   const { loading: categoriesLoading, data: categoriesData } = useQuery(CATEGORY_QUERY);
   const { loading: productsLoading, data: productsData, refetch } = useQuery(PRODUCTS_QUERY, {
@@ -28,7 +31,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
     },
   });
 
-  function emptyList() {
+  function emptyList(): ReactElement {
     return productsLoading ? (
       <SkeletonContent
         containerStyle={{
@@ -42,7 +45,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
       />
     ) : (
       <View style={{ ...styles.emptyContainer, paddingTop: 30 }}>
-        <Text style={styles.emptyMessage}>Nothing to show here! :/</Text>
+        <Text style={styles.emptyMessage}>Nada para exibir aqui :/</Text>
       </View>
     );
   }
@@ -60,7 +63,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
     refetch();
   }
 
-  function onCategoryPress(id) {
+  function onCategoryPress(id: number) {
     if (activeCategory === id) {
       setActiveCategory(null);
     } else {
@@ -69,7 +72,7 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
     refetch();
   }
 
-  function renderItem({ item }: any) {
+  function renderItem({ item }) {
     return <CardItem item={item} />;
   }
 
@@ -86,7 +89,6 @@ const ProductsList: React.FC<ProductListProps> = ({ route, navigation }) => {
           categories={categoriesData?.allCategory}
           onButtonPress={onCategoryPress}
           activeButton={activeCategory}
-          categoriesLoading={categoriesLoading}
           isLoading={categoriesLoading}
         />
       </View>
