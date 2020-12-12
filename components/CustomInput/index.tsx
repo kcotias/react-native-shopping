@@ -11,7 +11,12 @@ const CustomInput: React.FC<CustomInputProps> = ({
   onChangeText,
   placeholder,
 }: CustomInputProps) => (
-  <TextInput onChangeText={onChangeText} placeholder={placeholder} style={styles.textInput} />
+  <TextInput
+    onChangeText={onChangeText}
+    placeholder={placeholder}
+    style={styles.textInput}
+    placeholderTextColor="gray"
+  />
 );
 
 export default CustomInput;

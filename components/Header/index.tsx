@@ -5,17 +5,16 @@ import styles from './styles';
 
 interface HeaderProps {
   hasBackButton?: boolean;
+  onBackPress?: () => void;
   hasTitle?: boolean;
 }
 
-const Home: React.FC<HeaderProps> = ({ hasBackButton, hasTitle }: HeaderProps) => (
+const Header: React.FC<HeaderProps> = ({ hasBackButton, hasTitle, onBackPress }: HeaderProps) => (
   <View style={styles.container}>
-    <View>
-      {hasBackButton && <Button onPress={() => alert('back')} iconName="chevron-back-outline" />}
-    </View>
+    <View>{hasBackButton && <Button onPress={onBackPress} iconName="chevron-back-outline" />}</View>
     {hasTitle && <Text style={styles.title}>Tasty Drinks</Text>}
     <Button onPress={() => alert('modal')} iconName="information-circle-outline" />
   </View>
 );
 
-export default Home;
+export default React.memo(Header);

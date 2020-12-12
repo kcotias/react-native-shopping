@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { gql, useLazyQuery } from '@apollo/client';
@@ -37,24 +37,30 @@ const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
   // Using an inline arrow function will cause PureComponents, and memo
   // to rerender anyway.
   async function onConfirm() {
-    const now = new Date().toISOString();
-    let location;
-    try {
-      const response = await Location.geocodeAsync(typedAdress, { useGoogleMaps: true });
-      location = response[0];
-    } catch (e) {
-      console.log(e);
-      Alert.alert('Oops', 'Something went wrong, make you sure the adress is correct');
+    if (typedAdress && typedAdress === 'Rua Américo Brasiliense, São Paulo') {
+      const now = new Date().toISOString();
+      let location;
+      try {
+        const response = await Location.geocodeAsync(typedAdress, { useGoogleMaps: true });
+        location = response[0];
+      } catch (e) {
+        Alert.alert('Oops', 'Something went wrong, make you sure the adress is correct');
+      }
+      getPoc({
+        variables: location && {
+          now,
+          algorithm,
+          lat: JSON.stringify(location.latitude),
+          long: JSON.stringify(location.longitude),
+        },
+      });
+      navigation.navigate('ProductsList', { pocId: data.pocSearch[0].id });
+    } else {
+      Alert.alert(
+        'Oops',
+        'Verifique o endereço digitado, lembre que temos que usar um endereço especifico! :)',
+      );
     }
-    getPoc({
-      variables: location && {
-        now,
-        algorithm,
-        lat: JSON.stringify(location.latitude),
-        long: JSON.stringify(location.longitude),
-      },
-    });
-    // navigation.navigate('ProductsList', {id: data.pocSearch.})
   }
 
   function handleChangeText(text: string) {
@@ -62,29 +68,33 @@ const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
   }
 
   return (
-    <LinearGradient style={styles.gradient} colors={['#fe6277', '#ffbf6f']}>
-      <Header />
-      <View style={styles.logoContainer}>
-        <Logo />
-      </View>
-      <View style={styles.textWrapper}>
-        <Text style={styles.welcomeText}>Welcome to</Text>
-        <Text style={styles.appTitle}>
-          TASTY<Text style={{ color: Colors.pallete.tertiary }}>DRINKS</Text>
-        </Text>
-      </View>
-      <CustomInput
-        onChangeText={handleChangeText}
-        placeholder="Where do you wish to receive your deliver?"
-      />
-      <Button
-        onPress={onConfirm}
-        title="Confirm"
-        style={styles.confirmButton}
-        textStyle={styles.buttonText}
-        isLoading={loading}
-      />
-    </LinearGradient>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+      <LinearGradient style={styles.gradient} colors={['#fe6277', '#ffbf6f']}>
+        <Header />
+        <View style={styles.logoContainer}>
+          <Logo />
+        </View>
+        <View style={styles.textWrapper}>
+          <Text style={styles.welcomeText}>Bem vindo a</Text>
+          <Text style={styles.appTitle}>
+            TASTY<Text style={{ color: Colors.pallete.tertiary }}>DRINKS</Text>
+          </Text>
+        </View>
+        <CustomInput
+          onChangeText={handleChangeText}
+          placeholder="Digite: Rua Américo Brasiliense, São Paulo"
+        />
+        <Button
+          onPress={onConfirm}
+          title="Confirmar"
+          style={styles.confirmButton}
+          textStyle={styles.buttonText}
+          isLoading={loading}
+        />
+      </LinearGradient>
+    </KeyboardAvoidingView>
   );
 };
 
