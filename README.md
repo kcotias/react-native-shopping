@@ -15,6 +15,8 @@
 
 ## About the Project
 
+![](donus-test.gif)
+
 This is the result of the [test requested](https://github.com/ztech-company/donus-code-challenge/blob/master/frontend-mobile.md) as part of Donus hiring process.
 
 ## Made with
