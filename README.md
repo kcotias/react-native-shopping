@@ -80,6 +80,9 @@ or
 ```bash
 yarn run ios
 ```
+
+** In order to search the address you have to exactly type in the address mentioned on the textinput, "Rua Américo Brasiliense, São Paulo" without any extra space. A controversial decision, I know, but with my local tests with some users, were the best to make the app usable, since any other request would lead to no answer.
+
 About tests ...
 In the RH interview i was told this role is planned to have start at january 5 which give us little time to do everything, and since i'm working on weekday, i made all i could to deliver it this weekend, barely haven't slept haha, so i've only made a unit test of one of the components to show superficially my knowledge and setup on tests.
 
