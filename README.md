@@ -30,7 +30,7 @@ There are some other dependencies worth mentioning:
 
 ## Architecture
 
-I have chosen to follow a mix of the well known Atomic Pattern with a modular approach to separate each vertical of the App. Despite being a relatively small app, i've made this decision to show what would be my ideal arch for bigger and more complex Apps that woul require scalability.
+I have chosen to follow a mix of the well known Atomic Pattern with a modular approach to separate each vertical of the App. Despite being a relatively small app, i've made this decision to show what would be my ideal arch for bigger and more complex Apps that would require scalability.
 
 For naming i've adopted the PascalCase style for files and folders.
 
