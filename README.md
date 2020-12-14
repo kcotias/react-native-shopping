@@ -50,6 +50,7 @@ To improve performance i've made little choices that won't impact an App with th
     Using an inline arrow function will cause PureComponents, and components that use shallowCompare in the shouldComponentUpdate method to rerender anyway. Since the arrow function prop is recreated each time, the shallow compare will identify it as a change to a prop, and the component will rerender.`
     read more at: https://stackoverflow.com/a/36677798
 
+Ideally i would have used absolute imports instead of relative imports, but to be more faster and avoid more setups i've decided to go with relative, but i truly prefer absolute imports :P
 ## How to run
 
 I've made the App using IOS simulator to be faster since i only had the weekend, so i highly recommend the Iphone 11 pro Max to be the test device. I've tested on iphone 8 and higher devices, but the best experience is the mentioned. I would give a little more attention to responsiveness and screen sizes using react-native-screen but due to lack of time i thought it wouldn't affect the test result.
