@@ -31,14 +31,18 @@ const CardItem: React.FC<CardItemProps> = ({ item }: CardItemProps) => {
           {counter > 0 && (
             <>
               <Button
+                testID="decrease"
                 onPress={() => onCounterPress('decrease')}
                 iconName="remove-outline"
                 iconColor={Colors.pallete.primaryDark}
               />
-              <Text style={{ marginHorizontal: 3 }}>{counter}</Text>
+              <Text testID="counter" style={{ marginHorizontal: 3 }}>
+                {counter}
+              </Text>
             </>
           )}
           <Button
+            testID="increase"
             onPress={() => onCounterPress('increase')}
             iconName="add-outline"
             iconColor={Colors.pallete.primaryDark}

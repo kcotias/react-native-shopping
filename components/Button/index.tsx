@@ -23,8 +23,12 @@ const Button: React.FC<ButtonProps> = ({
   style,
   textStyle,
   isLoading,
+  testID,
 }: ButtonProps) => (
-  <Pressable onPress={onPress} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
+  <Pressable
+    testID={testID}
+    onPress={onPress}
+    style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
     <View style={style || { ...styles.container, paddingHorizontal: !iconName ? 20 : 0 }}>
       {iconName && <Ionicons name={iconName} size={28} color={iconColor || 'white'} />}
       {title && !isLoading && (

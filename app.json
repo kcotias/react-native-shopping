@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "donus",
-    "slug": "donus",
+    "name": "donus test",
+    "slug": "donus-test",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,6 +29,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/kcotias/donus-react-native"
   }
 }
