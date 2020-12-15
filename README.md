@@ -38,7 +38,7 @@ I've decided to use FC (functional components) all over the app instead of the c
 
 For styling i didn't used any helper such as Styled Components, only to show my knowledge on css-in-js pattern itself.
 
-I've decided to not use any Global state management (i.e. redux, mobX ...) because would add an unecessary layer of complexity, and since modern GraphQl client provides us power to kinda off replace it by cacheing our query results and having a state management itself, so would be a smarter decision to use it as the only source of truth.
+I've decided to not use any Global state management (i.e. redux, mobX ...) because would add an unecessary layer of complexity, and since modern GraphQl client provides us power to kind of replace it by cacheing our query results and having a state management itself, so would be a smarter decision to use it as the only source of truth.
 
 To improve performance i've made little choices that won't impact an App with this size, but in a bigger App they would've made a great impact:
 
