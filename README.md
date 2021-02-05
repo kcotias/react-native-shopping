@@ -17,11 +17,9 @@
 
 ![](donus-test.gif)
 
-This is the result of the [test requested](https://github.com/ztech-company/donus-code-challenge/blob/master/frontend-mobile.md) as part of Donus hiring process.
-
 ## Made with
 
-The project was built using TypeScript with [React Native](https://reactnative.dev/) and [Expo](https://expo.io/) (To provide hosting as requested on the test description).
+The project was built using TypeScript with [React Native](https://reactnative.dev/) and [Expo](https://expo.io/).
 
 There are some other dependencies worth mentioning:
 - [React Navigation](https://reactnavigation.org/) to handle navigations.
@@ -55,11 +53,7 @@ To improve performance i've made little choices that won't impact an App with th
 Ideally i would have used absolute imports instead of relative imports, but to be more faster and avoid more setups i've decided to go with relative, but i truly prefer absolute imports :P
 ## How to run
 
-I've made the App using IOS simulator to be faster since i only had the weekend, so i highly recommend the Iphone 11 pro Max to be the test device. I've tested on iphone 8 and higher devices, but the best experience is the mentioned. I would give a little more attention to responsiveness and screen sizes using react-native-screen but due to lack of time i thought it wouldn't affect the test result.
-
-You can find it hosted on Expo a well, but i didnt had any Android device to test how it behaves, but i'll try to do that soon.
-
-https://expo.io/@kcotias/projects/donus-test
+I've made the App using IOS simulator to be faster since i only had the weekend, so i highly recommend the Iphone 11 pro Max to be the test device. I've tested on iphone 8 and higher devices, but the best experience is the mentioned. I would give a little more attention to responsiveness and screen sizes using react-native-screen but due to lack of time i thought it wouldn't affect the result.
 
 Running locally:
 
@@ -83,14 +77,6 @@ yarn run ios
 
 ** In order to search the address you have to exactly type in the address mentioned on the textinput, "Rua Américo Brasiliense, São Paulo" without any extra space. A controversial decision, I know, but with my local tests with some users, were the best to make the app usable, since any other request would lead to no answer.
 
-About tests ...
-In the RH interview i was told this role is planned to have start at january 5 which give us little time to do everything, and since i'm working on weekday, i made all i could to deliver it this weekend, barely haven't slept haha, so i've only made a unit test of one of the components to show superficially my knowledge and setup on tests.
-
-To run it just:
-
-```bash
-yarn test
-```
 ## Contacts
 
 You can see a little more of my job at my github profile where i have some open source RN libraries.
@@ -99,4 +85,4 @@ phone: +55 11 991803266
 linkedin: http://www.linkedin.com/in/kcotias
 instagram: @kaiandev
 
-### Thanks a lot for your time :) Looking forward to be on the same boat soon!
+### Thanks a lot for your time :)
